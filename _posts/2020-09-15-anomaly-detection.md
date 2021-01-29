@@ -1,7 +1,7 @@
 ---
 toc: true
 layout: post
-description: Anomaly Detection: Methodes and Challenges
+description: Methodes and Challenges
 categories: [markdown]
 title: Anomaly Detection
 ---
