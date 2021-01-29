@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Anomaly Detection | Salah Chadli</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Anomaly Detection" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Challenges" />
+<meta property="og:description" content="Challenges" />
+<link rel="canonical" href="https://chadlis.github.io/blog/markdown/2020/09/15/anomaly-detection.html" />
+<meta property="og:url" content="https://chadlis.github.io/blog/markdown/2020/09/15/anomaly-detection.html" />
+<meta property="og:site_name" content="Salah Chadli" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-09-15T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://chadlis.github.io/blog/markdown/2020/09/15/anomaly-detection.html","@type":"BlogPosting","headline":"Anomaly Detection","dateModified":"2020-09-15T00:00:00-05:00","datePublished":"2020-09-15T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://chadlis.github.io/blog/markdown/2020/09/15/anomaly-detection.html"},"description":"Challenges","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://chadlis.github.io/blog/feed.xml" title="Salah Chadli" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.css" integrity="sha512-h7nl+xz8wgDlNM4NqKEM4F1NkIRS17M9+uJwIGwuo8vGqIl4BhuCKdxjWEINm+xyrUjNCnK5dCrhM0sj+wTIXw==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/katex.min.js" integrity="sha512-/CMIhXiDA3m2c9kzRyd97MTb3MC6OVnx4TElQ7fkkoRghwDf6gi41gaT1PwF270W6+J60uTmwgeRpNpJdRV6sg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.12.0/contrib/auto-render.min.js" integrity="sha512-Do7uJAaHZm5OLrIv/yN4w0iG1dbu01kzdMNnFfu/mAqgUk6Nniv2JYHcwH+cNwjqgLcqcuBBk+JRvprLVI8azg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha512-0doc9hKxR3PYwso42RD1p5ySZpzzuDiOwMrdCEh2WdJZCjcmFKc/wEnL+z8fBQrnHoiNWbo+3fiGkOYXBdQp4A==" crossorigin="anonymous"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        renderMathInElement( document.body, {
+        delimiters: [
+            {left: "$$", right: "$$", display: true},
+            {left: "[%", right: "%]", display: true},
+            {left: "$", right: "$", display: false}
+        ]}
+        );
+    });
+    </script>
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Salah Chadli</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Anomaly Detection</h1><p class="page-description">Challenges</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-09-15T00:00:00-05:00" itemprop="datePublished">
+        Sep 15, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#markdown">markdown</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#introduction">Introduction</a></li>
+<li class="toc-entry toc-h1"><a href="#unknown-or-very-rare-known-anomalies">Unknown or very rare known anomalies</a></li>
+<li class="toc-entry toc-h1"><a href="#distinguish-anomalies-from-noise">Distinguish anomalies from noise</a></li>
+<li class="toc-entry toc-h1"><a href="#a-critical-choice-of-the-data-model">A critical choice of the data model</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#statistical-and-probabilistic-methods">Statistical and probabilistic methods</a></li>
+<li class="toc-entry toc-h2"><a href="#distance-based-methods">Distance-based methods</a></li>
+<li class="toc-entry toc-h2"><a href="#clustering">Clustering</a></li>
+<li class="toc-entry toc-h2"><a href="#predictive-approaches">Predictive approaches</a></li>
+<li class="toc-entry toc-h2"><a href="#ensembling-methods">Ensembling methods</a></li>
+<li class="toc-entry toc-h2"><a href="#the-curse-of-dimensionality">The curse of dimensionality</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#conclusion">Conclusion</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#references">References</a></li>
+</ul>
+</li>
+</ul><h1 id="introduction">
+<a class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h1>
+
+<p>What do your Twitter posts on New Year’s Day, the payment of your Netflix subscription and your last Uber trip have in common? Well, all these actions are monitored in real time via anomaly detection algorithms that ensure that abnormal phenomena are anticipated and that the quality of service is maintained.</p>
+
+<p>Data are generally generated by a specific process reflecting a particular activity: the historical distribution of the amounts and frequencies of bank transactions for a given customer can give indications about his or her usual behavior.</p>
+
+<p>Anomalies are generated by an unusual behavior of the data generation process. Therefore, they  often contain useful information on the characteristics of this behaviour: a very high banking transaction (relative to usual transactions) may be indicative of a case of bank fraud.</p>
+
+<p>Anomaly detection consists in finding patterns in the data that deviate from the so-called “normal” behavior. In the literature, there are many denominations referring more or less equally to this task. In this post, we will consider that outlier detection consists in identifying “undesirable” values in order to simply do data cleaning, where anomaly detection tries to identify events of interest in order to detect their cause.</p>
+
+<p>From one field of application to another, the response provided by the anomaly detection system will not be the same. The very notion of anomaly is different from one problem to another. In health, a small deviation from the average can be considered abnormal, whereas such a deviation on financial data on the stock market can be considered usual and common.</p>
+
+<h1 id="unknown-or-very-rare-known-anomalies">
+<a class="anchor" href="#unknown-or-very-rare-known-anomalies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unknown or very rare known anomalies</h1>
+
+<p>In the case where known abnormal observations are available, on choice is to reduce part or the whole problem of anomaly detection to a problem of supervised classification.</p>
+
+<p>In reality, if available, labelled data are often rare. It is therefore essential to manage this imbalance. The use of a supervised classifier for anomaly detection, although useful for the identification of known anomaly modes, may subsequently have difficulties in identifying new anomaly types on which it has not been trained.</p>
+
+<p>When known abnormal observations are not available. One is therefore in a completely unsupervised context. In this case, the analysis is mainly based on the assumption that the majority of observations would be generated by a normal process.</p>
+
+<p>Some approaches exploit unsupervised methods to build a model of normal data, and thus to be able to identify anomalies as those that are outside this definition of normality. However, these methods rely heavily on some assumptions and only work if they are respected.</p>
+
+<p>As it is often not difficult to collect labelled normal data in addition to a small number of known abnormal data, it is recommended that this should be exploited as much as possible in learning the boundary between normality and abnormality. One way to make this process effiecent is to use Active Learning techniques.</p>
+
+<h1 id="distinguish-anomalies-from-noise">
+<a class="anchor" href="#distinguish-anomalies-from-noise" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distinguish anomalies from noise</h1>
+
+<p>In a context of anomaly detection, we seek to identify interesting deviations from the normal behavior. As data are often noisy, an important challenge is to be able to distinguish noise from real anomalies.</p>
+
+<p>For example, in an IoT environment where a large number of low-cost and resource-constrained sensors are deployed, data quality is often affected by high noise, inconsistencies and missing or duplicated data.</p>
+
+<p>In an unsupervised context, noise represents the semantic boundary between normal and anomalous data. Noise can be seen as a form of outlier data that does not meet the criteria of interest to be considered an anomaly.</p>
+
+<p>Noise robust methods can help improve the quality of detection. The main challenge here is that the amount of noise can differ considerably between datasets and can be distributed irregularly.</p>
+
+<h1 id="a-critical-choice-of-the-data-model">
+<a class="anchor" href="#a-critical-choice-of-the-data-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>A critical choice of the data model</h1>
+
+<p>Anomaly detection techniques often start from different assumptions about the normal behavior of the data, create a model representing this normal behavior according to these assumptions, and then evaluate the deviation of each data from this constructed model.</p>
+
+<p>The choice of the model is crucial. An incorrect choice can lead to poor detection quality because the data do not follow the initial hypotheses.</p>
+
+<p>For example, a Gaussian mixture model may not work properly, if the data do not match the generative assumptions of the model, or if a sufficient number of data points are not available to learn the parameters of the model. Similarly, a linear regression model may malfunction if there are no linear relationships in the data.</p>
+
+<h2 id="statistical-and-probabilistic-methods">
+<a class="anchor" href="#statistical-and-probabilistic-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Statistical and probabilistic methods</h2>
+<p>These methods use historical data to model the expected behavior of a system. When a new observation is received, it is compared to the current model of that system and if it does not match the current model, it is recorded as an anomaly.</p>
+
+<h2 id="distance-based-methods">
+<a class="anchor" href="#distance-based-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distance-based methods</h2>
+<p>A measure of distance is defined so that a newly received observation can be compared with those that precede it, on the assumption that a smaller distance would most likely occur from similar mechanisms and would therefore be reported as normal. Conversely, a greater distance would indicate that the observation was generated by a different mechanism and would therefore be reported as abnormal.</p>
+
+<h2 id="clustering">
+<a class="anchor" href="#clustering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Clustering</h2>
+<p>This approach projects the data into a multidimensional space and uses the density of the resulting groups. Observations that have close and dense groups are reported as normal observations, while those that are further away from or outside these groups are reported as abnormal.</p>
+
+<h2 id="predictive-approaches">
+<a class="anchor" href="#predictive-approaches" aria-hidden="true"><span class="octicon octicon-link"></span></a>Predictive approaches</h2>
+<p>A regression model is generated based on recent and longer-term trends in the system that predicts the expected value at some point in the future. When a new observation is received, it is compared to these predicted values and an assessment is made of the accuracy of this prediction, where the observed value and the predicted value vary greatly; this observation is flagged as abnormal.</p>
+
+<h2 id="ensembling-methods">
+<a class="anchor" href="#ensembling-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ensembling methods</h2>
+<p>It uses a number of different algorithms to observe each data point and some form of voting mechanism is employed on the results of each method. For example, for IoT data, a set can be constructed from a group of similar or dissimilar models. Often, the use of ensemble techniques can improve the overall success of a detection suite, at the possible expense of model complexity and computation time.</p>
+
+<p>The choice of approach is highly dependent on a number of factors within the monitored data as well as the deployment environment.</p>
+
+<h2 id="the-curse-of-dimensionality">
+<a class="anchor" href="#the-curse-of-dimensionality" aria-hidden="true"><span class="octicon octicon-link"></span></a>The curse of dimensionality</h2>
+
+<p>Anomalies often show obvious abnormal characteristics in a low-dimensional space, but become hidden and invisible in a high-dimensional space.</p>
+
+<p>In these spaces, data becomes increasingly sparse and all pairs of data points become almost equidistant from each other. As a result, anomaly scores become less distinguishable from each other.
+In this case, anomalies are better highlighted in a subspace of original or constructed variables. This approach is called “Subspace Anomaly Detection”.</p>
+
+<p>These methods start from the assumption that the abnormal character of the observations can be highlighted in the unusual local structures of small subspaces, and this deviant behaviour is masked by a full-dimensional analysis.</p>
+
+<h1 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
+
+<p>The problem of anomaly detection has applications in many areas, where it is desirable to identify interesting and unusual events in the underlying generation process.</p>
+
+<p>At the heart of all anomaly detection methods is the creation of a probabilistic, statistical or algorithmic model that characterizes the normal data. Deviations from this model are then used to identify anomalies.</p>
+
+<p>A good knowledge of the underlying data in a specific domain is often crucial to design simple and accurate models that do not overfit the underlying data (overfitting).</p>
+
+<h3 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h3>
+<p>Outlier Analysis. Second Edition. Charu C. Aggarwal</p>
+
+<p>Anomaly Detection for IoT Time-Series Data: A Survey, Andrew Cook, Goksel Mısırlı, and Zhong Fan, ¨ Senior Member, IEEE</p>
+
+<p>S. K. Bose, B. Kar, M. Roy, P. K. Gopalakrishnan, and A. Basu, “Adepos: anomaly detection based power saving for predictive maintenance
+using edge computing,” in Proceedings of the 24th Asia and South
+Pacific Design Automation Conference. ACM, 2019, pp. 597–602.</p>
+
+<p>Deep Learning for Anomaly Detection: A Review
+Guansong Pang, Chunhua Shen, Longbing Cao, Anton van den Hengel</p>
+
+<p>Robust Anomaly Detection on Unreliable Data Zilong Zhao, Sophie Cerf, Robert Birke, Bogdan Robu, Sara Bouchenak, Sonia Ben Mokhtar, Lydia Y. Che</p>
+
+  </div><a class="u-url" href="/blog/markdown/2020/09/15/anomaly-detection.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p></p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/chadlis" title="chadlis"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/chadlisalah" title="chadlisalah"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
